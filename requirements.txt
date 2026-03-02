@@ -17,3 +17,4 @@ t.start()
 pyTelegramBotAPI
 openai
 duckduckgo-search
+flask
