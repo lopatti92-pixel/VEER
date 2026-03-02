@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import telebot 
+import os
+import telebot
+import threading
+from flask import Flask
 from openai import OpenAI
 from duckduckgo_search import DDGS
 
-# ================= CONFIG =================
-TELEGRAM_TOKEN = "8770742071:AAFyHnHxW4TwOR2HKPHXUK0LPjxNNGqoLYU"
-GROQ_API_KEY = "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"
+# --- PORT FIX FOR RENDER ---
+app = Flask('')
+@app.route('/')
+def home(): return "Bot is Running!"
+def run(): app.run(host='0.0.0.0', port=8080)
+
+# --- CONFIG (Environment Variables) ---
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 client = OpenAI(
