@@ -8,10 +8,15 @@ from openai import OpenAI
 from duckduckgo_search import DDGS
 
 # --- PORT FIX FOR RENDER ---
-app = Flask('')
-@app.route('/')
-def home(): return "Bot is Running!"
-def run(): app.run(host='0.0.0.0', port=8080)
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Bot is Running!"
+
+def run():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 
 # --- CONFIG (Environment Variables) ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
@@ -170,4 +175,9 @@ def main_ai(message):
 # ================= START =================
 
 print("🤖 Veer Pro AI (FREE, Stable Build) is LIVE")
+
+# Start Flask in separate thread
+threading.Thread(target=run).start()
+
+# Start Telegram bot
 bot.polling()
